@@ -1,0 +1,103 @@
+feature,importance,type
+sig_str_diff,0.19047323,diff_stat
+str_diff,0.113173276,diff_stat
+kd_diff,0.08657988,diff_stat
+sub_att_diff,0.06276415,diff_stat
+ctrl_sec_diff,0.043389115,diff_stat
+td_diff,0.034877658,diff_stat
+sig_str_acc_diff,0.025876833,diff_stat
+losses_total_diff,0.024207368,diff_stat
+td_acc_diff,0.02304448,diff_stat
+wins_total_diff,0.020521104,diff_stat
+wc_Women's Flyweight,0.01612317,weight_class
+wc_Bantamweight,0.015950643,weight_class
+str_att_diff,0.01546759,diff_stat
+rev_diff,0.01475475,diff_stat
+wc_Middleweight,0.014431528,weight_class
+str_acc_diff,0.014350922,diff_stat
+td_def_total_diff,0.013997963,diff_stat
+SLpM_total_diff,0.0137509545,diff_stat
+SApM_total_diff,0.013636712,diff_stat
+wc_Lightweight,0.013442137,weight_class
+wc_Flyweight,0.013317368,weight_class
+td_avg_diff,0.013274907,diff_stat
+sig_str_acc_total_diff,0.012815301,diff_stat
+weight_diff,0.012778238,diff_stat
+td_att_diff,0.012720457,diff_stat
+sub_avg_diff,0.012632151,diff_stat
+is_title_bout,0.0123758335,diff_stat
+age_diff,0.012294099,diff_stat
+sig_str_att_diff,0.012285236,diff_stat
+str_def_total_diff,0.011910518,diff_stat
+reach_diff,0.011808659,diff_stat
+wc_Light Heavyweight,0.011774783,weight_class
+td_acc_total_diff,0.011591359,diff_stat
+wc_Women's Strawweight,0.010687007,weight_class
+height_diff,0.010648052,diff_stat
+wc_Featherweight,0.010550877,weight_class
+wc_Women's Bantamweight,0.010231741,weight_class
+wc_Welterweight,0.009375905,weight_class
+total_rounds,0.008386642,diff_stat
+wc_Heavyweight,0.0077274195,weight_class
+wc_TUF Nations Canada vs. Australia Middleweight Tournament Title,0.0,weight_class
+wc_Catch Weight,0.0,weight_class
+wc_TUF Nations Canada vs. Australia Welterweight Tournament Title,0.0,weight_class
+wc_UFC Bantamweight Title,0.0,weight_class
+wc_UFC Featherweight Title,0.0,weight_class
+wc_UFC Flyweight Title,0.0,weight_class
+wc_UFC Interim Heavyweight Title,0.0,weight_class
+wc_UFC Interim Light Heavyweight Title,0.0,weight_class
+wc_UFC Interim Lightweight Title,0.0,weight_class
+wc_UFC Interim Middleweight Title,0.0,weight_class
+wc_UFC Heavyweight Title,0.0,weight_class
+wc_UFC Interim Bantamweight Title,0.0,weight_class
+wc_UFC Interim Featherweight Title,0.0,weight_class
+wc_UFC Interim Flyweight Title,0.0,weight_class
+wc_UFC Welterweight Title,0.0,weight_class
+wc_UFC Women's Bantamweight Title,0.0,weight_class
+wc_UFC Women's Featherweight Title,0.0,weight_class
+wc_UFC Women's Flyweight Title,0.0,weight_class
+wc_UFC Women's Strawweight Title,0.0,weight_class
+wc_Ultimate Fighter 1 Light Heavyweight Tournament Title,0.0,weight_class
+wc_Ultimate Fighter 1 Middleweight Tournament Title,0.0,weight_class
+wc_Ultimate Fighter 10 Heavyweight Tournament Title,0.0,weight_class
+wc_Ultimate Fighter 11 Middleweight Tournament Title,0.0,weight_class
+wc_Ultimate Fighter 12 Lightweight Tournament Title,0.0,weight_class
+wc_Ultimate Fighter 13 Welterweight Tournament Title,0.0,weight_class
+wc_Ultimate Fighter 14 Bantamweight Tournament Title,0.0,weight_class
+wc_UFC Interim Welterweight Title,0.0,weight_class
+wc_UFC Light Heavyweight Title,0.0,weight_class
+wc_UFC Lightweight Title,0.0,weight_class
+wc_UFC Middleweight Title,0.0,weight_class
+wc_Ultimate Fighter 17 Middleweight Tournament Title,0.0,weight_class
+wc_Ultimate Fighter 16 Welterweight Tournament Title,0.0,weight_class
+wc_Ultimate Fighter 15 Lightweight Tournament Title,0.0,weight_class
+wc_Ultimate Fighter 14 Featherweight Tournament Title,0.0,weight_class
+wc_Ultimate Fighter 19 Middleweight Tournament Title,0.0,weight_class
+wc_Ultimate Fighter 2 Welterweight Tournament Title,0.0,weight_class
+wc_Ultimate Fighter 22 Lightweight Tournament Title,0.0,weight_class
+wc_Ultimate Fighter 23 Light Heavyweight Tournament Title,0.0,weight_class
+wc_Ultimate Fighter 28 Women's Featherweight Tournament Title,0.0,weight_class
+wc_Ultimate Fighter 3 Middleweight Tournament Title,0.0,weight_class
+wc_Ultimate Fighter 4 Middleweight Tournament Title,0.0,weight_class
+wc_Ultimate Fighter 4 Welterweight Tournament Title,0.0,weight_class
+wc_Ultimate Fighter 23 Women's Strawweight Tournament Title,0.0,weight_class
+wc_Ultimate Fighter 25 Welterweight Tournament Title,0.0,weight_class
+wc_Ultimate Fighter 27 Lightweight Tournament Title,0.0,weight_class
+wc_Ultimate Fighter 28 Heavyweight Tournament Title,0.0,weight_class
+wc_Ultimate Fighter 8 Light Heavyweight Tournament Title,0.0,weight_class
+wc_Ultimate Fighter 7 Middleweight Tournament Title,0.0,weight_class
+wc_Ultimate Fighter 6 Welterweight Tournament Title,0.0,weight_class
+wc_Ultimate Fighter 5 Lightweight Tournament Title,0.0,weight_class
+wc_Ultimate Fighter 8 Lightweight Tournament Title,0.0,weight_class
+wc_Ultimate Fighter 9 Lightweight Tournament Title,0.0,weight_class
+wc_Ultimate Fighter 9 Welterweight Tournament Title,0.0,weight_class
+wc_Ultimate Fighter Australia vs. UK Welterweight Tournament Title,0.0,weight_class
+wc_Ultimate Fighter Brazil 3 Heavyweight Tournament Title,0.0,weight_class
+wc_Ultimate Fighter Brazil 2 Welterweight Tournament Title,0.0,weight_class
+wc_Ultimate Fighter Brazil 1 Middleweight Tournament Title,0.0,weight_class
+wc_Ultimate Fighter Brazil 1 Featherweight Tournament Title,0.0,weight_class
+wc_Ultimate Fighter Latin America Bantamweight Tournament Title,0.0,weight_class
+wc_Ultimate Fighter Latin America 3 Lightweight Tournament Title,0.0,weight_class
+wc_Ultimate Fighter Brazil 3 Middleweight Tournament Title,0.0,weight_class
+wc_Women's Featherweight,0.0,weight_class

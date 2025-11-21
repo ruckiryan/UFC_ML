@@ -1,0 +1,13 @@
+# Ignore virtual env
+.venv/
+
+# Python junk
+__pycache__/
+*.pyc
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Big data/model files you might not want on GitHub
+data/*.xlsx
+models/*.joblib

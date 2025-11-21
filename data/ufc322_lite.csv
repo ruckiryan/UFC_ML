@@ -1,0 +1,7 @@
+red_fighter,blue_fighter,american_odds_red,american_odds_blue,is_title_bout,total_rounds,sig_str_diff,str_diff,kd_diff,sig_str_acc_diff,str_acc_diff,SLpM_total_diff,SApM_total_diff,str_def_total_diff,td_diff,td_acc_diff,td_def_total_diff,sub_att_diff,sub_avg_diff,ctrl_sec_diff,age_diff,reach_diff,wins_total_diff,losses_total_diff
+Jack Della Maddalena,Islam Makhachev,245,-300,1,5,4.21,4.21,0,-0.06,-0.06,4.21,2.98,0.03,-3.04,-0.42,-0.21,-0.9,-0.9,0,-5,3,-10,1
+Valentina Shevchenko,Zhang Weili,-136,116,1,5,-2.01,-2.01,0,-0.01,-0.01,-2.01,-0.71,0.09,0.38,0.15,0.01,-0.2,-0.2,0,1,3,-1,1
+Sean Brady,Michael Morales,-142,120,0,3,-1.62,-1.62,0,0.06,0.06,-1.62,-0.37,0.06,2.53,0.13,-0.03,0.9,0.9,0,6,-7,0,1
+Leon Edwards,Carlos Prates,142,-168,0,3,-1.2,-1.2,0,0,0,-1.2,-2.38,0.05,0.95,-0.64,-0.21,0.4,0.4,0,2,-4,0,-2
+Benali Dariush,Benoit Saint Denis,160,-190,0,3,-1.27,-1.27,0,-0.06,-0.06,-1.27,-1.58,0.15,-2.23,0.01,0.12,-0.08,-0.08,0,7,-1,8,3
+Bo Nickal,Rodolfo Vieira,-230,190,0,3,-1.41,-1.41,0,0.04,0.04,-1.41,-2.01,0.07,0.25,0.3,0,1.9,1.9,0,-7,3,-4,-2
