@@ -1,7 +1,7 @@
 #  UFC Fight Outcome Prediction (Machine Learning Project)
 
 This project uses logistic regression and ML to **predict each fighers (R/B) probability of winning** based on fighter attributes, statistics, and historical performance.  
-It’s built with Python, trained locally in VS Code, and will later be deployed using **Google Vertex AI**.
+It’s built with Python, trained locally in VS Code, and will later be deployed using **Google Vertex AI**. Currently, two UFC events (UFC322, UFCQatar) have been trained and predicted. The next event UFC 323: Merab vs Yan.
 
 ---
 
@@ -18,7 +18,7 @@ It’s built with Python, trained locally in VS Code, and will later be deployed
 ---
 
 ##  Tech Requirements
-- **Language:** Python 3.12  
+- **Language:** Python 3.13  
 - **Libraries:** `pandas`, `numpy`, `scikit-learn`, `xgboost`, `matplotlib`, `seaborn`, `joblib`, `jupyterlab`  
 - **Tools:** VS Code
 
