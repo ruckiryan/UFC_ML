@@ -26,6 +26,6 @@ It’s built with Python, trained locally in VS Code, and will later be deployed
 
 ##  Getting Started
 
-### 1. Activate the environment (Personal virtual environment created with requirements txt softwares, simply name the subfolder on your c drive ".venv" if you would like to recreate it!
+### 1. Activate the environment (Personal virtual environment created with requirements txt, simply name the subfolder on your c drive ".venv" if you would like to recreate it!
 ```bash
 .\.venv\Scripts\Activate.ps1
