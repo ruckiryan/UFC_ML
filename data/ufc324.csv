@@ -1,0 +1,7 @@
+red_fighter,blue_fighter,odds_red_DK,odds_blue_DK,odds_red_FD,odds_blue_FD,odds_red_PIN,odds_blue_PIN,is_title_bout,total_rounds,age_diff,height_diff,reach_diff,SLpM_total_diff,SApM_total_diff,sig_str_acc_total_diff,str_def_total_diff,td_avg_diff,td_acc_total_diff,td_def_total_diff,sub_avg_diff,wins_total_diff,losses_total_diff
+Justin Gaethje,Paddy Pimblett,190,-230,184,-230,2.92,1.446,1,5,6,1,-3,1.4,4.04,0.05,0.09,-0.86,-0.14,0.18,-1.7,3,2
+Sean O'Malley,Song Yadong,-205,170,-215,172,1.518,2.66,0,3,3,3,5,1.72,-0.52,0.18,0.05,-0.34,0.04,-0.12,0.2,-4,-5
+Waldo Cortes-Acosta,Derrick Lewis,-340,270,-320,245,1.304,3.74,0,3,-6,1,-1,3.04,1.04,-0.02,0.15,-0.21,0.24,0.2,0.1,-13,-10
+Arnold Allen,Jean Silva,210,-258,220,-280,3.13,1.4,0,3,3,1,1,-1.34,-1.81,-0.1,0.07,0.43,-0.03,-0.03,-0.5,4,0
+Umar Nurmagomedov,Deiveson Figueiredo,-1450,850,-1500,790,1.074,9.7,0,3,-8,3,1,1.33,-1.5,0.03,0.11,2.59,0.12,0.22,-1,-6,-4
+
