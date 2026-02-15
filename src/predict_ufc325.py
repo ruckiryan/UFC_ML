@@ -1,4 +1,4 @@
-#src/predict_ufc324.py
+#src/predict_ufc325.py VERSION 2 MODEL
 
 from pathlib import Path
 import numpy as np
@@ -6,7 +6,7 @@ import pandas as pd
 import joblib
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
-DATA_PATH = PROJECT_ROOT / "data" / "ufc324.csv"
+DATA_PATH = PROJECT_ROOT / "data" / "ufc325.csv"
 MODEL_PATH = PROJECT_ROOT / "models" / "ufc_xgb_lite.joblib"  # your v2-lite trained model
 
 def american_to_payout(odds: float) -> float:
@@ -42,7 +42,7 @@ def main():
         "losses_total_diff",
     ]
 
-    print(f"Loading UFC 324 fights from: {DATA_PATH}")
+    print(f"Loading UFC 325 fights from: {DATA_PATH}")
     df = pd.read_csv(DATA_PATH)
    
 
@@ -87,12 +87,12 @@ def main():
 
     df_sorted = df.sort_values("best_ev", ascending=False)
 
-    out_path = PROJECT_ROOT / "data" / "ufc324_predictions.csv"
+    out_path = PROJECT_ROOT / "data" / "ufc325_predictions.csv"
     df_sorted.to_csv(out_path, index=False)
 
     print(f"\nPredictions saved to: {out_path}\n")
     
-    print("\n===== UFC 324 Betting Model Results =====\n")
+    print("\n===== UFC 325 Betting Model Results =====\n")
 
     for _, row in df_sorted.iterrows():
         print(f"{row['red_fighter']} vs {row['blue_fighter']}")
