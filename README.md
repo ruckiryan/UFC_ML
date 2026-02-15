@@ -1,31 +1,51 @@
-#  UFC Fight Outcome Prediction (Machine Learning Project)
+# UFC Fight Outcome Prediction (Machine Learning Project)
 
 This project uses logistic regression (Binary Classification) and ML to **predict each fighers (R/B) probability of winning** based on fighter attributes, statistics, and historical performance.  
-It’s built with Python, trained locally in VS Code, and will later be deployed using **Google Vertex AI**. Currently, three UFC events (UFC322, UFCQatar, UFC324) have been trained and predicted. 
+It’s built with Python, trained locally in VS Code, and will later be deployed using **Google Vertex AI**. Currently, three UFC events (UFC322, UFCQatar, UFC324) have been trained and predicted.
 
 ---
 
-##  Folder Structure
-| Folder | Description |
-|---------|-------------|
-| `data/` | Raw and cleaned datasets (CSV files) |
-| `notebooks/` | Jupyter notebooks for large ufc csv (Exploratory data anlysis) |
-| `src/` | Python scripts for feature engineering, training, and predictions |
-| `models/` | Saved trained model files (`.joblib` or `.pkl`) |
-| `visuals/` | Plots and charts generated during analysis |
-| `logs/` | Training logs and performance metrics |
+## Folder Structure
+
+| Folder       | Description                                                       |
+| ------------ | ----------------------------------------------------------------- |
+| `data/`      | Raw and cleaned datasets (CSV files)                              |
+| `notebooks/` | Jupyter notebooks for large ufc csv (Exploratory data anlysis)    |
+| `src/`       | Python scripts for feature engineering, training, and predictions |
+| `models/`    | Saved trained model files (`.joblib` or `.pkl`)                   |
+| `visuals/`   | Plots and charts generated during analysis                        |
+| `logs/`      | Training logs and performance metrics                             |
 
 ---
 
-##  Tech Requirements
-- **Language:** Python 3.13  
-- **Libraries:** `pandas`, `numpy`, `scikit-learn`, `xgboost`, `matplotlib`, `seaborn`, `joblib`, `jupyterlab`  
+## Tech Requirements
+
+- **Language:** Python 3.13
+- **Libraries:** `pandas`, `numpy`, `scikit-learn`, `xgboost`, `matplotlib`, `seaborn`, `joblib`, `jupyterlab`
 - **Tools:** VS Code
 
 ---
 
-##  Getting Started
+## Getting Started
 
 ### 1. Activate the environment (Personal virtual environment created with requirements txt, simply name the subfolder on your c drive ".venv" if you would like to recreate it!
+
 ```bash
 .\.venv\Scripts\Activate.ps1
+```
+
+# How to use git:
+
+1. To check if there any changes that you dont have:
+
+git fetch origin
+
+git pull origin
+
+2. Add you work:
+
+git add .
+
+git commit -m "commit message"
+
+git push
