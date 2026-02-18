@@ -1,51 +1,73 @@
 # UFC Fight Outcome Prediction (Machine Learning Project)
 
-This project uses logistic regression (Binary Classification) and ML to **predict each fighers (R/B) probability of winning** based on fighter attributes, statistics, and historical performance.  
-It’s built with Python, trained locally in VS Code, and will later be deployed using **Google Vertex AI**. Currently, three UFC events (UFC322, UFCQatar, UFC324) have been trained and predicted.
+This project uses logistic regression (Binary Classification) and ML to predict each fighers (red/blue corner) probability of winning based on fighter attributes, statistics, and historical performance.
 
----
+Currently, three UFC events (UFC322, UFCQatar, UFC324) have been trained and predicted. To view the model's result's on these previous events please checkout the model's [outcomes](/OUTCOMES.md).
 
-## Folder Structure
+# Getting Started:
 
-| Folder       | Description                                                       |
-| ------------ | ----------------------------------------------------------------- |
-| `data/`      | Raw and cleaned datasets (CSV files)                              |
-| `notebooks/` | Jupyter notebooks for large ufc csv (Exploratory data anlysis)    |
-| `src/`       | Python scripts for feature engineering, training, and predictions |
-| `models/`    | Saved trained model files (`.joblib` or `.pkl`)                   |
-| `visuals/`   | Plots and charts generated during analysis                        |
-| `logs/`      | Training logs and performance metrics                             |
+> [!NOTE]
+> The following section of this README assumes that the development environment has access (and uses) standard UNIX tools like [`bash/zsh`](https://www.gnu.org/software/bash/) and [`git`](https://git-scm.com/). Please make sure you have them installed before continuing.
+> Windows users: It is recommended to either use `git bash` or the [Windows Subsystem For Linux](https://learn.microsoft.com/en-us/windows/wsl/install)
 
----
+## Cloning the repository:
 
-## Tech Requirements
+In whatever directory you store programming-related projects, run:
 
-- **Language:** Python 3.13
-- **Libraries:** `pandas`, `numpy`, `scikit-learn`, `xgboost`, `matplotlib`, `seaborn`, `joblib`, `jupyterlab`
-- **Tools:** VS Code
+```sh
+# HTTP:
+$ git clonehttps://github.com/ruckiryan/UFC_ML.git
 
----
+# SSH:
+$ git@github.com:ruckiryan/UFC_ML.git
 
-## Getting Started
-
-### 1. Activate the environment (Personal virtual environment created with requirements txt, simply name the subfolder on your c drive ".venv" if you would like to recreate it!
-
-```bash
-.\.venv\Scripts\Activate.ps1
+# Navigate to the project directory:
+$ cd UFC_ML
 ```
 
-# How to use git:
+Then, open the project using your favorite text editor.
 
-1. To check if there any changes that you dont have:
+## Creating a virtual enviornment:
 
-git fetch origin
+For this section you will need to have `Python 3.12` (we are using the latest 3.12 version [3.12.12], but any 3.12.x should work) installed and as the working interpreter of the project. We recommend [pyenv](https://github.com/pyenv/pyenv).
 
-git pull origin
+1. Ensure you have the correct python version:
 
-2. Add you work:
+```sh
+$ python --version
 
-git add .
+# If the shell does not return:
+$ Python 3.12.x
 
-git commit -m "commit message"
+# Run:
+$ pyenv local 3.12.12
 
-git push
+# Check version again:
+$ python --version
+$ python 3.12.12
+```
+
+2. Make and activate the virtual env:
+
+```sh
+$ python -m venv .venv
+$ source .venv/bin/activate
+```
+
+## Installing Project Dependencies:
+
+The project currently has 2 different `requirements.txt` files. The first [`requirements.txt`](/requirements.txt) installs the core runtime dependencies to train the model and perform data analytics. The other [`requirements-dev.txt`](/requirements-dev.txt), contains additional packages for running and editing jupyter notebooks, doing interactive plotting, and other miscellaneous packages. **For simply running the model, it is recommended that you install the basic `requirements.txt`**:
+
+```sh
+$ pip install -r requirements.txt
+```
+
+## Training a model
+
+**TODO IN PROGRESS, UPDATE AS NEEDED**
+
+```sh
+$ cd src
+$ python model_fillename.py # train the actual model.
+$ predict.py # predict the event.
+```

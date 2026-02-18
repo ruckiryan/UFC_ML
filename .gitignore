@@ -11,3 +11,9 @@ __pycache__/
 # Big data/model files you might not want on GitHub
 data/*.xlsx
 models/*.joblib
+
+# VSCode settings
+.vscode/
+
+# Pyenv version:
+.python-version
