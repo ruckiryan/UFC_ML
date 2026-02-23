@@ -71,3 +71,71 @@ $ cd src
 $ python model_fillename.py # train the actual model.
 $ predict.py # predict the event.
 ```
+
+Proposed Architecture:
+
+ufc-ml-platform/
+├── backend/ # FastAPI application
+│ ├── app/
+│ │ ├── **init**.py
+│ │ ├── main.py # FastAPI app entry
+│ │ ├── api/
+│ │ │ ├── v1/
+│ │ │ │ ├── endpoints/
+│ │ │ │ │ ├── predictions.py
+│ │ │ │ │ ├── fighters.py
+│ │ │ │ │ ├── scraper.py
+│ │ │ │ │ └── models.py
+│ │ │ │ └── router.py
+│ │ ├── core/
+│ │ │ ├── config.py
+│ │ │ ├── security.py
+│ │ │ └── database.py
+│ │ ├── db/
+│ │ │ ├── models.py # SQLAlchemy models
+│ │ │ ├── schemas.py # Pydantic schemas
+│ │ │ └── crud.py # Database operations
+│ │ ├── ml/
+│ │ │ ├── model_loader.py
+│ │ │ ├── feature_engineering.py
+│ │ │ ├── trainer.py
+│ │ │ └── predictor.py
+│ │ ├── scraper/
+│ │ │ ├── ufc_stats_scraper.py
+│ │ │ ├── parsers.py
+│ │ │ └── validators.py
+│ │ └── utils/
+│ │ ├── odds_converter.py
+│ │ └── ev_calculator.py
+│ ├── alembic/ # Database migrations
+│ ├── tests/
+│ ├── Dockerfile
+│ └── requirements.txt
+│
+├── frontend/ # React + TypeScript
+│ ├── src/
+│ │ ├── components/
+│ │ │ ├── Dashboard/
+│ │ │ ├── Predictions/
+│ │ │ ├── FighterComparison/
+│ │ │ ├── ModelMetrics/
+│ │ │ └── Scraper/
+│ │ ├── hooks/
+│ │ ├── services/
+│ │ │ └── api.ts
+│ │ ├── types/
+│ │ ├── utils/
+│ │ ├── App.tsx
+│ │ └── main.tsx
+│ ├── Dockerfile
+│ ├── package.json
+│ └── vite.config.ts
+│
+├── ml-service/ # Separate ML service (optional)
+│ ├── models/ # Trained model artifacts
+│ ├── notebooks/ # Keep for research/analysis
+│ └── scripts/ # Training scripts
+│
+├── docker-compose.yml
+├── .env.example
+└── README.md
