@@ -27,6 +27,8 @@ import requests
 from bs4 import BeautifulSoup
 
 # ── Config ──────────────────────────────────────────────────────────────────
+# All of this will need to get moved to an env file later.
+
 BASE_URL = "http://ufcstats.com"
 EVENTS_URL = f"{BASE_URL}/statistics/events/completed?page=all"
 
@@ -267,6 +269,20 @@ def scrape_fight_details(fight_url: str) -> dict:
         )
 
     if len(cells) >= 10:
+        # Cell 0 holds fighter names; first <p> = red corner, second = blue corner.
+        # This is the authoritative source for corner assignment – the event-page
+        # listing always puts the winner first, which would bias win_red to 1.
+        name_ps = cells[0].find_all("p")
+        if len(name_ps) >= 2:
+            r_link = name_ps[0].find("a")
+            b_link = name_ps[1].find("a")
+            if r_link:
+                data["r_fighter"] = r_link.get_text(strip=True)
+                data["r_fighter_url"] = r_link.get("href", "")
+            if b_link:
+                data["b_fighter"] = b_link.get_text(strip=True)
+                data["b_fighter_url"] = b_link.get("href", "")
+
         r_kd, b_kd = two_vals(cells[1])
         data["r_kd"] = _parse_int(r_kd)
         data["b_kd"] = _parse_int(b_kd)
@@ -448,8 +464,10 @@ def scrape_all(max_events: Optional[int] = None) -> pd.DataFrame:
             except Exception as exc:
                 print(f"  WARN – fight detail error ({fight['fight_url']}): {exc}")
 
-            # Red fighter stats (cached)
-            r_url = fight.get("r_fighter_url", "")
+            # Red fighter stats (cached).
+            # Use row's r_fighter_url – fight_data may have corrected the corner
+            # assignment, overriding whatever the event page listed.
+            r_url = row.get("r_fighter_url", "")
             if r_url:
                 if r_url not in fighter_cache:
                     try:
@@ -460,8 +478,8 @@ def scrape_all(max_events: Optional[int] = None) -> pd.DataFrame:
                 r_stats = fighter_cache[r_url]
                 row.update({f"r_{k}": v for k, v in r_stats.items() if k != "fighter_url"})
 
-            # Blue fighter stats (cached)
-            b_url = fight.get("b_fighter_url", "")
+            # Blue fighter stats (cached).
+            b_url = row.get("b_fighter_url", "")
             if b_url:
                 if b_url not in fighter_cache:
                     try:

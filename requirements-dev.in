@@ -1,0 +1,17 @@
+# Developer dependencies — extends core with Excel I/O and notebook support
+# Covers: clean_ufc_data.py (reads .xlsx), EDA notebooks, visualizations
+
+-r requirements.in
+
+# Excel data processing (required by clean_ufc_data.py for large_dataset.xlsx)
+openpyxl
+
+# Build / dependency management
+pip-tools
+
+# Notebooks and visualization
+jupyterlab
+ipykernel
+matplotlib
+seaborn
+scipy
