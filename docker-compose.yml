@@ -1,0 +1,44 @@
+services:
+
+  # ── Scraper ─────────────────────────────────────────────────────────────────
+  # One-shot job: scrapes ufcstats.com and writes to data/raw_fights.csv
+  # Usage: docker compose run --rm scraper
+  #        docker compose run --rm scraper python -m src.scraper --max-events 5
+  scraper:
+    build:
+      context: .
+      target: runtime
+    volumes:
+      - ./data:/app/data
+    command: python -m src.scraper
+
+  # ── ML pipeline ─────────────────────────────────────────────────────────────
+  # One-shot job: data cleaning, model training, prediction scripts
+  # No default command — invoke the script you need, for example:
+  #   docker compose run --rm ml python src/clean_ufc_data.py
+  #   docker compose run --rm ml python src/train_lite_modelV2.py
+  #   docker compose run --rm ml python src/predict_ufc325.py
+  ml:
+    build:
+      context: .
+      target: runtime
+    volumes:
+      - ./data:/app/data
+      - ./models:/app/models
+      - ./visuals:/app/visuals
+
+  # ── JupyterLab ───────────────────────────────────────────────────────────────
+  # Persistent service: interactive notebooks and EDA
+  # Usage: docker compose up jupyter
+  #        then open http://localhost:8888
+  jupyter:
+    build:
+      context: .
+      target: dev
+    ports:
+      - "8888:8888"
+    volumes:
+      - ./data:/app/data
+      - ./models:/app/models
+      - ./notebooks:/app/notebooks
+    restart: unless-stopped
