@@ -1,51 +1,104 @@
 # UFC Fight Outcome Prediction (Machine Learning Project)
 
-This project uses logistic regression (Binary Classification) and ML to **predict each fighers (R/B) probability of winning** based on fighter attributes, statistics, and historical performance.  
-It’s built with Python, trained locally in VS Code, and will later be deployed using **Google Vertex AI**. Currently, three UFC events (UFC322, UFCQatar, UFC324) have been trained and predicted.
+This project uses logistic regression (Binary Classification) and ML to predict each fighter's (red/blue corner) probability of winning based on fighter attributes, statistics, and historical performance.
 
----
+Currently, three UFC events (UFC322, UFCQatar, UFC324) have been trained and predicted. To view the model's results on these previous events please checkout the model's [outcomes](/OUTCOMES.md).
 
-## Folder Structure
+# Getting Started
 
-| Folder       | Description                                                       |
-| ------------ | ----------------------------------------------------------------- |
-| `data/`      | Raw and cleaned datasets (CSV files)                              |
-| `notebooks/` | Jupyter notebooks for large ufc csv (Exploratory data anlysis)    |
-| `src/`       | Python scripts for feature engineering, training, and predictions |
-| `models/`    | Saved trained model files (`.joblib` or `.pkl`)                   |
-| `visuals/`   | Plots and charts generated during analysis                        |
-| `logs/`      | Training logs and performance metrics                             |
+> [!NOTE]
+> The following section assumes access to standard UNIX tools like [`bash/zsh`](https://www.gnu.org/software/bash/) and [`git`](https://git-scm.com/).
+> Windows users: use [Git Bash](https://git-scm.com/downloads) or [WSL](https://learn.microsoft.com/en-us/windows/wsl/install).
 
----
+## Cloning the repository
 
-## Tech Requirements
+```sh
+# HTTPS:
+git clone https://github.com/ruckiryan/UFC_ML.git
 
-- **Language:** Python 3.13
-- **Libraries:** `pandas`, `numpy`, `scikit-learn`, `xgboost`, `matplotlib`, `seaborn`, `joblib`, `jupyterlab`
-- **Tools:** VS Code
+# SSH:
+git clone git@github.com:ruckiryan/UFC_ML.git
 
----
-
-## Getting Started
-
-### 1. Activate the environment (Personal virtual environment created with requirements txt, simply name the subfolder on your c drive ".venv" if you would like to recreate it!
-
-```bash
-.\.venv\Scripts\Activate.ps1
+cd UFC_ML
 ```
 
-# How to use git:
+## Python version
 
-1. To check if there any changes that you dont have:
+Python 3.12.x is required (`.python-version` pins `3.12.12`). We recommend [pyenv](https://github.com/pyenv/pyenv) to manage versions:
 
-git fetch origin
+```sh
+pyenv install 3.12.12
+pyenv local 3.12.12
+python --version  # should print Python 3.12.x
+```
 
-git pull origin
+## Creating a virtual environment
 
-2. Add you work:
+```sh
+python -m venv .venv
+source .venv/bin/activate       # Linux / macOS / WSL
+# .venv\Scripts\activate        # Windows (cmd / PowerShell)
+```
 
-git add .
+## Installing dependencies
 
-git commit -m "commit message"
+Dependencies are managed with [pip-tools](https://pip-tools.readthedocs.io). There are two tiers:
 
-git push
+| File | Purpose |
+|---|---|
+| `requirements.txt` | Core runtime — scraping, training, prediction |
+| `requirements-dev.txt` | Adds Excel I/O (`openpyxl`), Jupyter notebooks, and visualisation |
+
+**Core install** (scraper + model training + prediction scripts):
+
+```sh
+pip install -r requirements.txt
+```
+
+**Developer install** (also enables `clean_ufc_data.py` with `.xlsx` files and JupyterLab notebooks):
+
+```sh
+pip install -r requirements-dev.txt
+```
+
+### Regenerating locked dependencies
+
+If you add a new dependency, edit the corresponding `.in` file and recompile:
+
+```sh
+pip install pip-tools          # only needed once, already in requirements-dev.txt
+
+# Regenerate core
+pip-compile --strip-extras --no-emit-trusted-host --no-header requirements.in -o requirements.txt
+
+# Regenerate dev (includes core via -r requirements.in)
+pip-compile --strip-extras --no-emit-trusted-host --no-header requirements-dev.in -o requirements-dev.txt
+
+# Sync your environment to match the compiled output
+pip-sync requirements-dev.txt  # or requirements.txt for a core-only env
+```
+
+> [!NOTE]
+> Compiled `.txt` files include a `; sys_platform == "linux"` marker on CUDA packages pulled in by xgboost, so they install cleanly on Windows and macOS without modification.
+
+## Running the pipeline
+
+```sh
+# 1. Scrape fight data from ufcstats.com
+python -m src.scraper                  # all events  → data/raw_fights.csv
+python -m src.scraper --max-events 5   # quick test
+
+# 2. Clean data (requires dev install for openpyxl)
+python src/clean_ufc_data.py           # data/large_dataset.xlsx → data/ufc_features.csv
+
+# 3. Train
+python src/train_lite_modelV2.py       # recommended → models/ufc_xgb_lite.joblib
+python src/train_model.py              # full model   → models/ufc_xgb_model.joblib
+
+# 4. Predict an upcoming event (copy an existing predict_*.py and adapt)
+python src/predict_ufc325.py           # → data/ufc325_predictions.csv
+
+# 5. Model analysis
+python src/feature_importance.py       # → visuals/feature_importance.csv
+python src/show_features.py            # print features in trained model
+```

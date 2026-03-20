@@ -1,0 +1,13 @@
+# Core runtime dependencies
+# Covers: scraper, data cleaning, model training, prediction scripts
+
+pandas
+numpy
+scikit-learn
+xgboost
+joblib
+requests
+beautifulsoup4
+
+# xgboost pulls in CUDA libs on Linux — pin with platform marker for cross-platform compat
+nvidia-nccl-cu12; sys_platform == "linux"
