@@ -1,4 +1,4 @@
-#src/predict_ufc324.py
+# src/predict_ufc324.py
 
 from pathlib import Path
 import numpy as np
@@ -7,7 +7,10 @@ import joblib
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 DATA_PATH = PROJECT_ROOT / "data" / "ufc324.csv"
-MODEL_PATH = PROJECT_ROOT / "models" / "ufc_xgb_lite.joblib"  # your v2-lite trained model
+MODEL_PATH = (
+    PROJECT_ROOT / "models" / "ufc_xgb_lite.joblib"
+)  # your v2-lite trained model
+
 
 def american_to_payout(odds: float) -> float:
     # Net profit per $1 stake if the bet wins
@@ -15,9 +18,11 @@ def american_to_payout(odds: float) -> float:
         return odds / 100.0
     return 100.0 / -odds
 
+
 def decimal_to_payout(dec: float) -> float:
     # Net profit per $1 stake if the bet wins
     return dec - 1.0
+
 
 def main():
     print(f"Loading model from: {MODEL_PATH}")
@@ -44,7 +49,6 @@ def main():
 
     print(f"Loading UFC 324 fights from: {DATA_PATH}")
     df = pd.read_csv(DATA_PATH)
-   
 
     # sanity check
     missing = [c for c in feature_cols if c not in df.columns]
@@ -82,7 +86,9 @@ def main():
     df["ev_red_per_$1"] = df.apply(lambda r: best_ev(r, "red"), axis=1)
     df["ev_blue_per_$1"] = df.apply(lambda r: best_ev(r, "blue"), axis=1)
 
-    df["better_side"] = np.where(df["ev_red_per_$1"] > df["ev_blue_per_$1"], "Red", "Blue")
+    df["better_side"] = np.where(
+        df["ev_red_per_$1"] > df["ev_blue_per_$1"], "Red", "Blue"
+    )
     df["best_ev"] = df[["ev_red_per_$1", "ev_blue_per_$1"]].max(axis=1)
 
     df_sorted = df.sort_values("best_ev", ascending=False)
@@ -91,7 +97,7 @@ def main():
     df_sorted.to_csv(out_path, index=False)
 
     print(f"\nPredictions saved to: {out_path}\n")
-    
+
     print("\n===== UFC 324 Betting Model Results =====\n")
 
     for _, row in df_sorted.iterrows():
@@ -108,5 +114,3 @@ def main():
 if __name__ == "__main__":
     main()
 
-
-    
