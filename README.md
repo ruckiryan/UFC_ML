@@ -1,141 +1,104 @@
 # UFC Fight Outcome Prediction (Machine Learning Project)
 
-This project uses logistic regression (Binary Classification) and ML to predict each fighers (red/blue corner) probability of winning based on fighter attributes, statistics, and historical performance.
+This project uses logistic regression (Binary Classification) and ML to predict each fighter's (red/blue corner) probability of winning based on fighter attributes, statistics, and historical performance.
 
-Currently, three UFC events (UFC322, UFCQatar, UFC324) have been trained and predicted. To view the model's result's on these previous events please checkout the model's [outcomes](/OUTCOMES.md).
+Currently, three UFC events (UFC322, UFCQatar, UFC324) have been trained and predicted. To view the model's results on these previous events please checkout the model's [outcomes](/OUTCOMES.md).
 
-# Getting Started:
+# Getting Started
 
 > [!NOTE]
-> The following section of this README assumes that the development environment has access (and uses) standard UNIX tools like [`bash/zsh`](https://www.gnu.org/software/bash/) and [`git`](https://git-scm.com/). Please make sure you have them installed before continuing.
-> Windows users: It is recommended to either use `git bash` or the [Windows Subsystem For Linux](https://learn.microsoft.com/en-us/windows/wsl/install)
+> The following section assumes access to standard UNIX tools like [`bash/zsh`](https://www.gnu.org/software/bash/) and [`git`](https://git-scm.com/).
+> Windows users: use [Git Bash](https://git-scm.com/downloads) or [WSL](https://learn.microsoft.com/en-us/windows/wsl/install).
 
-## Cloning the repository:
-
-In whatever directory you store programming-related projects, run:
+## Cloning the repository
 
 ```sh
-# HTTP:
-$ git clonehttps://github.com/ruckiryan/UFC_ML.git
+# HTTPS:
+git clone https://github.com/ruckiryan/UFC_ML.git
 
 # SSH:
-$ git@github.com:ruckiryan/UFC_ML.git
+git clone git@github.com:ruckiryan/UFC_ML.git
 
-# Navigate to the project directory:
-$ cd UFC_ML
+cd UFC_ML
 ```
 
-Then, open the project using your favorite text editor.
+## Python version
 
-## Creating a virtual enviornment:
-
-For this section you will need to have `Python 3.12` (we are using the latest 3.12 version [3.12.12], but any 3.12.x should work) installed and as the working interpreter of the project. We recommend [pyenv](https://github.com/pyenv/pyenv).
-
-1. Ensure you have the correct python version:
+Python 3.12.x is required (`.python-version` pins `3.12.12`). We recommend [pyenv](https://github.com/pyenv/pyenv) to manage versions:
 
 ```sh
-$ python --version
-
-# If the shell does not return:
-$ Python 3.12.x
-
-# Run:
-$ pyenv local 3.12.12
-
-# Check version again:
-$ python --version
-$ python 3.12.12
+pyenv install 3.12.12
+pyenv local 3.12.12
+python --version  # should print Python 3.12.x
 ```
 
-2. Make and activate the virtual env:
+## Creating a virtual environment
 
 ```sh
-$ python -m venv .venv
-$ source .venv/bin/activate
+python -m venv .venv
+source .venv/bin/activate       # Linux / macOS / WSL
+# .venv\Scripts\activate        # Windows (cmd / PowerShell)
 ```
 
-## Installing Project Dependencies:
+## Installing dependencies
 
-The project currently has 2 different `requirements.txt` files. The first [`requirements.txt`](/requirements.txt) installs the core runtime dependencies to train the model and perform data analytics. The other [`requirements-dev.txt`](/requirements-dev.txt), contains additional packages for running and editing jupyter notebooks, doing interactive plotting, and other miscellaneous packages. **For simply running the model, it is recommended that you install the basic `requirements.txt`**:
+Dependencies are managed with [pip-tools](https://pip-tools.readthedocs.io). There are two tiers:
+
+| File | Purpose |
+|---|---|
+| `requirements.txt` | Core runtime — scraping, training, prediction |
+| `requirements-dev.txt` | Adds Excel I/O (`openpyxl`), Jupyter notebooks, and visualisation |
+
+**Core install** (scraper + model training + prediction scripts):
 
 ```sh
-$ pip install -r requirements.txt
+pip install -r requirements.txt
 ```
 
-## Training a model
-
-**TODO IN PROGRESS, UPDATE AS NEEDED**
+**Developer install** (also enables `clean_ufc_data.py` with `.xlsx` files and JupyterLab notebooks):
 
 ```sh
-$ cd src
-$ python model_fillename.py # train the actual model.
-$ predict.py # predict the event.
+pip install -r requirements-dev.txt
 ```
 
-Proposed Architecture:
+### Regenerating locked dependencies
 
-ufc-ml-platform/
-├── backend/ # FastAPI application
-│ ├── app/
-│ │ ├── **init**.py
-│ │ ├── main.py # FastAPI app entry
-│ │ ├── api/
-│ │ │ ├── v1/
-│ │ │ │ ├── endpoints/
-│ │ │ │ │ ├── predictions.py
-│ │ │ │ │ ├── fighters.py
-│ │ │ │ │ ├── scraper.py
-│ │ │ │ │ └── models.py
-│ │ │ │ └── router.py
-│ │ ├── core/
-│ │ │ ├── config.py
-│ │ │ ├── security.py
-│ │ │ └── database.py
-│ │ ├── db/
-│ │ │ ├── models.py # SQLAlchemy models
-│ │ │ ├── schemas.py # Pydantic schemas
-│ │ │ └── crud.py # Database operations
-│ │ ├── ml/
-│ │ │ ├── model_loader.py
-│ │ │ ├── feature_engineering.py
-│ │ │ ├── trainer.py
-│ │ │ └── predictor.py
-│ │ ├── scraper/
-│ │ │ ├── ufc_stats_scraper.py
-│ │ │ ├── parsers.py
-│ │ │ └── validators.py
-│ │ └── utils/
-│ │ ├── odds_converter.py
-│ │ └── ev_calculator.py
-│ ├── alembic/ # Database migrations
-│ ├── tests/
-│ ├── Dockerfile
-│ └── requirements.txt
-│
-├── frontend/ # React + TypeScript
-│ ├── src/
-│ │ ├── components/
-│ │ │ ├── Dashboard/
-│ │ │ ├── Predictions/
-│ │ │ ├── FighterComparison/
-│ │ │ ├── ModelMetrics/
-│ │ │ └── Scraper/
-│ │ ├── hooks/
-│ │ ├── services/
-│ │ │ └── api.ts
-│ │ ├── types/
-│ │ ├── utils/
-│ │ ├── App.tsx
-│ │ └── main.tsx
-│ ├── Dockerfile
-│ ├── package.json
-│ └── vite.config.ts
-│
-├── ml-service/ # Separate ML service (optional)
-│ ├── models/ # Trained model artifacts
-│ ├── notebooks/ # Keep for research/analysis
-│ └── scripts/ # Training scripts
-│
-├── docker-compose.yml
-├── .env.example
-└── README.md
+If you add a new dependency, edit the corresponding `.in` file and recompile:
+
+```sh
+pip install pip-tools          # only needed once, already in requirements-dev.txt
+
+# Regenerate core
+pip-compile --strip-extras --no-emit-trusted-host --no-header requirements.in -o requirements.txt
+
+# Regenerate dev (includes core via -r requirements.in)
+pip-compile --strip-extras --no-emit-trusted-host --no-header requirements-dev.in -o requirements-dev.txt
+
+# Sync your environment to match the compiled output
+pip-sync requirements-dev.txt  # or requirements.txt for a core-only env
+```
+
+> [!NOTE]
+> Compiled `.txt` files include a `; sys_platform == "linux"` marker on CUDA packages pulled in by xgboost, so they install cleanly on Windows and macOS without modification.
+
+## Running the pipeline
+
+```sh
+# 1. Scrape fight data from ufcstats.com
+python -m src.scraper                  # all events  → data/raw_fights.csv
+python -m src.scraper --max-events 5   # quick test
+
+# 2. Clean data (requires dev install for openpyxl)
+python src/clean_ufc_data.py           # data/large_dataset.xlsx → data/ufc_features.csv
+
+# 3. Train
+python src/train_lite_modelV2.py       # recommended → models/ufc_xgb_lite.joblib
+python src/train_model.py              # full model   → models/ufc_xgb_model.joblib
+
+# 4. Predict an upcoming event (copy an existing predict_*.py and adapt)
+python src/predict_ufc325.py           # → data/ufc325_predictions.csv
+
+# 5. Model analysis
+python src/feature_importance.py       # → visuals/feature_importance.csv
+python src/show_features.py            # print features in trained model
+```

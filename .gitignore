@@ -15,5 +15,3 @@ models/*.joblib
 # VSCode settings
 .vscode/
 
-# Pyenv version:
-.python-version
