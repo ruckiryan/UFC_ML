@@ -1,0 +1,24 @@
+# Python artifacts
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Git
+.git/
+.gitignore
+
+# Development tooling (not needed inside the image)
+.python-version
+requirements*.in
+
+# Runtime artifacts — mounted as volumes, never baked in
+data/
+models/
+visuals/
+notebooks/
+
+# IDE
+.vscode/
+.claude/

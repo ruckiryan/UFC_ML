@@ -52,6 +52,27 @@ python src/show_features.py            # List features in trained model
 
 There are no automated tests or linting configured.
 
+## Docker
+
+A multi-stage `Dockerfile` produces two images (`runtime` and `dev`). `docker-compose.yml` defines three services:
+
+| Service | Stage | Invocation |
+|---|---|---|
+| `scraper` | runtime | `docker compose run --rm scraper` |
+| `ml` | runtime | `docker compose run --rm ml python src/<script>.py` |
+| `jupyter` | dev | `docker compose up jupyter` → http://localhost:8888 |
+
+```bash
+docker compose build                                               # build all images
+docker compose run --rm scraper                                    # run scraper
+docker compose run --rm ml python src/train_lite_modelV2.py       # train model
+docker compose run --rm ml python src/predict_ufc325.py           # predict event
+docker compose up jupyter                                          # start notebook server
+docker compose down                                                # stop all
+```
+
+`data/`, `models/`, `notebooks/`, and `visuals/` are bind-mounted — outputs persist on the host.
+
 ## Architecture
 
 **Data flow**: ufcstats.com → `src/scraper.py` → `data/raw_fights.csv` → `src/clean_ufc_data.py` → `data/ufc_features.csv` → `src/train_lite_modelV2.py` → `models/ufc_xgb_lite.joblib` → `src/predict_*.py`

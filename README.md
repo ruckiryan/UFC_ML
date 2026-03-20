@@ -102,3 +102,48 @@ python src/predict_ufc325.py           # → data/ufc325_predictions.csv
 python src/feature_importance.py       # → visuals/feature_importance.csv
 python src/show_features.py            # print features in trained model
 ```
+
+## Docker
+
+Docker Compose defines three services built from a single multi-stage `Dockerfile`:
+
+| Service | Stage | Purpose |
+|---|---|---|
+| `scraper` | `runtime` | Scrapes ufcstats.com, writes `data/raw_fights.csv` |
+| `ml` | `runtime` | Data cleaning, model training, prediction scripts |
+| `jupyter` | `dev` | JupyterLab notebook server on port 8888 |
+
+`data/`, `models/`, `notebooks/`, and `visuals/` are always bind-mounted from the host — nothing is baked into the images.
+
+### Build
+
+```sh
+docker compose build
+```
+
+### Scraper
+
+```sh
+docker compose run --rm scraper                                     # full scrape
+docker compose run --rm scraper python -m src.scraper --max-events 5  # quick test
+```
+
+### ML pipeline
+
+The `ml` service has no default command — pass the script you need:
+
+```sh
+docker compose run --rm ml python src/clean_ufc_data.py
+docker compose run --rm ml python src/train_lite_modelV2.py
+docker compose run --rm ml python src/predict_ufc325.py
+docker compose run --rm ml python src/feature_importance.py
+```
+
+### JupyterLab
+
+```sh
+docker compose up jupyter
+# open http://localhost:8888
+```
+
+To stop: `docker compose down`
