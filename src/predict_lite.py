@@ -10,6 +10,8 @@ INPUT_PATH = PROJECT_ROOT / "data" / "ufc322_lite.csv"
 OUTPUT_PATH = PROJECT_ROOT / "data" / "ufc322_lite_predictions.csv"
 
 
+# TODO: REMOVE redundant odds conversion functions and import from src.utils.odds
+# CHECK IF THESE ARE EXACTLY THE SAME AS IN src.utils.odds and if so, import them instead of redefining here.
 def american_to_implied_prob(odds: float) -> float:
     if odds < 0:
         return (-odds) / ((-odds) + 100)
@@ -55,10 +57,16 @@ def main():
     red_profit_unit = df["american_odds_red"].apply(american_to_profit_per_unit)
     blue_profit_unit = df["american_odds_blue"].apply(american_to_profit_per_unit)
 
-    out["ev_red_per_$1"] = (out["prob_red_win"] * red_profit_unit) - (1 - out["prob_red_win"])
-    out["ev_blue_per_$1"] = (out["prob_blue_win"] * blue_profit_unit) - (1 - out["prob_blue_win"])
+    out["ev_red_per_$1"] = (out["prob_red_win"] * red_profit_unit) - (
+        1 - out["prob_red_win"]
+    )
+    out["ev_blue_per_$1"] = (out["prob_blue_win"] * blue_profit_unit) - (
+        1 - out["prob_blue_win"]
+    )
 
-    out["better_side"] = np.where(out["ev_red_per_$1"] > out["ev_blue_per_$1"], "Red", "Blue")
+    out["better_side"] = np.where(
+        out["ev_red_per_$1"] > out["ev_blue_per_$1"], "Red", "Blue"
+    )
 
     OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
     out.to_csv(OUTPUT_PATH, index=False)
@@ -79,4 +87,4 @@ def main():
 
 if __name__ == "__main__":
     main()
-    
+
