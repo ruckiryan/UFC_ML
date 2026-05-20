@@ -5,7 +5,7 @@ import pandas as pd
 
 
 # ---------- Paths ----------
-PROJECT_ROOT = Path(__file__).resolve().parents[1]   # C:\UFC_ML
+PROJECT_ROOT = Path(__file__).resolve().parents[1]  # C:\UFC_ML
 INPUT_PATH = PROJECT_ROOT / "data" / "large_dataset.xlsx"
 OUTPUT_PATH = PROJECT_ROOT / "data" / "ufc_features.csv"
 
@@ -71,7 +71,7 @@ def main():
         df_model,
         columns=["weight_class"],
         prefix="wc",
-        drop_first=False  # keep all classes; model can handle the redundancy
+        drop_first=False,  # keep all classes; model can handle the redundancy
     )
 
     # ---------- Final checks ----------

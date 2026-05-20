@@ -13,6 +13,7 @@ MODEL_PATH = PROJECT_ROOT / "models" / "ufc_xgb_lite.joblib"
 
 # -American odds and decimal odds conversion functions-
 
+
 def american_to_payout(odds: float) -> float:
     """Net profit per $1 stake if the bet wins (American odds)."""
     if odds > 0:
@@ -27,6 +28,7 @@ def decimal_to_payout(dec: float) -> float:
 
 
 # Main prediction plus EV calculation
+
 
 def main() -> None:
     print(f"Loading model from: {MODEL_PATH}")
@@ -55,7 +57,7 @@ def main() -> None:
     # CSV no tabs
     df = pd.read_csv(DATA_PATH)
     print("Columns in ufc_qatar_v2.csv:", list(df.columns))
-    
+
     missing = [c for c in feature_cols if c not in df.columns]
     if missing:
         raise ValueError(f"Missing feature columns in ufc_qatar_v2.csv: {missing}")
@@ -67,7 +69,7 @@ def main() -> None:
     df["prob_red_win"] = probs_red
     df["prob_blue_win"] = probs_blue
 
-    # EV based on best price from DK/FD/PIN 
+    # EV based on best price from DK/FD/PIN
 
     def row_ev(row, side: str) -> float:
         if side == "red":

@@ -29,6 +29,7 @@ from bs4 import BeautifulSoup
 # ── Config ──────────────────────────────────────────────────────────────────
 # All of this will need to get moved to an env file later.
 
+# TODO MOVE ALL OF THIS TO A CONFIG FILE OR ENV VARS.
 BASE_URL = "http://ufcstats.com"
 EVENTS_URL = f"{BASE_URL}/statistics/events/completed?page=all"
 
@@ -38,6 +39,7 @@ OUTPUT_PATH = PROJECT_ROOT / "data" / "raw_fights.csv"
 HEADERS = {"User-Agent": "Mozilla/5.0 (compatible; UFC-ML-Scraper/1.0; +research)"}
 REQUEST_DELAY = 1.5  # seconds between requests – be polite
 
+
 # ── HTTP helper ──────────────────────────────────────────────────────────────
 def _get_soup(url: str) -> BeautifulSoup:
     """Fetch *url* and return a BeautifulSoup parse tree. Sleeps after each call."""
@@ -45,6 +47,7 @@ def _get_soup(url: str) -> BeautifulSoup:
     resp.raise_for_status()
     time.sleep(REQUEST_DELAY)
     return BeautifulSoup(resp.text, "html.parser")
+
 
 # ── Value parsing helpers ────────────────────────────────────────────────────
 def _parse_int(val: str) -> Optional[int]:
@@ -60,12 +63,14 @@ def _parse_pct(val: str) -> Optional[float]:
     except ValueError:
         return None
 
+
 def _parse_of(val: str) -> tuple[Optional[int], Optional[int]]:
     """'10 of 30' → (10, 30)"""
     m = re.match(r"(\d+)\s+of\s+(\d+)", val.strip())
     if m:
         return int(m.group(1)), int(m.group(2))
     return None, None
+
 
 def _parse_ctrl(val: str) -> Optional[int]:
     """'2:30' → 150 (seconds). '--' or empty → None."""
@@ -75,20 +80,24 @@ def _parse_ctrl(val: str) -> Optional[int]:
     m = re.match(r"(\d+):(\d{2})", val)
     return int(m.group(1)) * 60 + int(m.group(2)) if m else None
 
+
 def _parse_height(val: str) -> Optional[float]:
     """'6\\' 2"' → 74.0 (inches)"""
     m = re.match(r"(\d+)'\s*(\d+)", val.strip())
     return float(int(m.group(1)) * 12 + int(m.group(2))) if m else None
+
 
 def _parse_reach(val: str) -> Optional[float]:
     """'72"' → 72.0"""
     m = re.match(r"(\d+\.?\d*)", val.strip())
     return float(m.group(1)) if m else None
 
+
 def _parse_weight(val: str) -> Optional[float]:
     """'185 lbs.' → 185.0"""
     m = re.match(r"(\d+\.?\d*)", val.strip())
     return float(m.group(1)) if m else None
+
 
 # ── 1. Events list ───────────────────────────────────────────────────────────
 def scrape_event_urls() -> list[dict]:
@@ -101,7 +110,9 @@ def scrape_event_urls() -> list[dict]:
     soup = _get_soup(EVENTS_URL)
     table = soup.find("table", class_="b-statistics__table-events")
     if not table:
-        raise RuntimeError("Events table not found — check CSS selector or site structure.")
+        raise RuntimeError(
+            "Events table not found — check CSS selector or site structure."
+        )
 
     events = []
     for row in table.select("tbody tr.b-statistics__table-row"):
@@ -127,15 +138,18 @@ def scrape_event_urls() -> list[dict]:
 
         location = cells[-1].get_text(strip=True)
 
-        events.append({
-            "event_name": name,
-            "event_date": date,
-            "event_location": location,
-            "event_url": url,
-        })
+        events.append(
+            {
+                "event_name": name,
+                "event_date": date,
+                "event_location": location,
+                "event_url": url,
+            }
+        )
 
     print(f"  Found {len(events)} completed events.")
     return events
+
 
 # ── 2. Fights per event ───────────────────────────────────────────────────────
 def scrape_event_fights(event_url: str) -> list[dict]:
@@ -180,15 +194,18 @@ def scrape_event_fights(event_url: str) -> list[dict]:
         r_fighter_url = fighter_links[0]["href"] if len(fighter_links) > 0 else ""
         b_fighter_url = fighter_links[1]["href"] if len(fighter_links) > 1 else ""
 
-        fights.append({
-            "fight_url": fight_url,
-            "r_fighter": r_name,
-            "b_fighter": b_name,
-            "r_fighter_url": r_fighter_url,
-            "b_fighter_url": b_fighter_url,
-        })
+        fights.append(
+            {
+                "fight_url": fight_url,
+                "r_fighter": r_name,
+                "b_fighter": b_name,
+                "r_fighter_url": r_fighter_url,
+                "b_fighter_url": b_fighter_url,
+            }
+        )
 
     return fights
+
 
 # ── 3. Fight details ─────────────────────────────────────────────────────────
 def scrape_fight_details(fight_url: str) -> dict:
@@ -221,7 +238,9 @@ def scrape_fight_details(fight_url: str) -> dict:
                 data["winner_name"] = (link or name_tag).get_text(strip=True)
 
     # ── Fight metadata ───────────────────────────────────────────────────────
-    for item in soup.select("p.b-fight-details__text-item, i.b-fight-details__text-item"):
+    for item in soup.select(
+        "p.b-fight-details__text-item, i.b-fight-details__text-item"
+    ):
         text = item.get_text(" ", strip=True)
         if text.startswith("Method:"):
             data["method"] = text.replace("Method:", "").strip()
@@ -239,7 +258,9 @@ def scrape_fight_details(fight_url: str) -> dict:
 
     # ── Title bout ───────────────────────────────────────────────────────────
     fight_type_tag = soup.find("i", class_="b-fight-details__fight-title")
-    fight_type_text = fight_type_tag.get_text(strip=True).lower() if fight_type_tag else ""
+    fight_type_text = (
+        fight_type_tag.get_text(strip=True).lower() if fight_type_tag else ""
+    )
     data["is_title_bout"] = int("title bout" in fight_type_text)
 
     # Weight class: e.g. "Lightweight Bout" → "Lightweight"
@@ -321,6 +342,7 @@ def scrape_fight_details(fight_url: str) -> dict:
 
     return data
 
+
 # ── 4. Fighter career stats ──────────────────────────────────────────────────
 def scrape_fighter(fighter_url: str) -> dict:
     """
@@ -349,9 +371,11 @@ def scrape_fighter(fighter_url: str) -> dict:
         record_text = re.sub(r"Record:\s*", "", record_text)
         record_text = re.sub(r"\(.*\)", "", record_text).strip()  # drop NC note
         parts = record_text.split("-")
-        data["wins"]   = int(parts[0]) if len(parts) > 0 and parts[0].isdigit() else None
-        data["losses"] = int(parts[1]) if len(parts) > 1 and parts[1].isdigit() else None
-        data["draws"]  = int(parts[2]) if len(parts) > 2 and parts[2].isdigit() else None
+        data["wins"] = int(parts[0]) if len(parts) > 0 and parts[0].isdigit() else None
+        data["losses"] = (
+            int(parts[1]) if len(parts) > 1 and parts[1].isdigit() else None
+        )
+        data["draws"] = int(parts[2]) if len(parts) > 2 and parts[2].isdigit() else None
 
     # Physical attributes and career stats (all in <li class="b-list__box-list-item"> elements)
     for li in soup.select("li.b-list__box-list-item"):
@@ -405,6 +429,7 @@ def scrape_fighter(fighter_url: str) -> dict:
 
     return data
 
+
 # ── 5. Resolve winner to red/blue ────────────────────────────────────────────
 def _resolve_winner(winner_name: str, r_fighter: str, b_fighter: str) -> Optional[int]:
     """
@@ -419,6 +444,7 @@ def _resolve_winner(winner_name: str, r_fighter: str, b_fighter: str) -> Optiona
     if wn in b_fighter.lower() or b_fighter.lower() in wn:
         return 0
     return None
+
 
 # ── 6. Full pipeline ─────────────────────────────────────────────────────────
 def scrape_all(max_events: Optional[int] = None) -> pd.DataFrame:
@@ -444,7 +470,9 @@ def scrape_all(max_events: Optional[int] = None) -> pd.DataFrame:
     fighter_cache: dict[str, dict] = {}
 
     for i, event in enumerate(events):
-        print(f"\nStep 2/3  [{i+1}/{n}] {event['event_name']}  ({event['event_date']})")
+        print(
+            f"\nStep 2/3  [{i + 1}/{n}] {event['event_name']}  ({event['event_date']})"
+        )
 
         try:
             fights = scrape_event_fights(event["event_url"])
@@ -476,7 +504,9 @@ def scrape_all(max_events: Optional[int] = None) -> pd.DataFrame:
                         print(f"  WARN – red fighter error: {exc}")
                         fighter_cache[r_url] = {}
                 r_stats = fighter_cache[r_url]
-                row.update({f"r_{k}": v for k, v in r_stats.items() if k != "fighter_url"})
+                row.update(
+                    {f"r_{k}": v for k, v in r_stats.items() if k != "fighter_url"}
+                )
 
             # Blue fighter stats (cached).
             b_url = row.get("b_fighter_url", "")
@@ -488,7 +518,9 @@ def scrape_all(max_events: Optional[int] = None) -> pd.DataFrame:
                         print(f"  WARN – blue fighter error: {exc}")
                         fighter_cache[b_url] = {}
                 b_stats = fighter_cache[b_url]
-                row.update({f"b_{k}": v for k, v in b_stats.items() if k != "fighter_url"})
+                row.update(
+                    {f"b_{k}": v for k, v in b_stats.items() if k != "fighter_url"}
+                )
 
             # Determine win_red label
             row["win_red"] = _resolve_winner(
@@ -509,6 +541,7 @@ def save(df: pd.DataFrame, path: Path = OUTPUT_PATH) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     df.to_csv(path, index=False)
     print(f"Saved → {path}  ({len(df)} rows, {len(df.columns)} columns)")
+
 
 # ── CLI entry point ──────────────────────────────────────────────────────────
 if __name__ == "__main__":
